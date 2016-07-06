@@ -129,8 +129,8 @@ def discover_appliances(ha):
     def entity_domain(x):
         return x['entity_id'].split('.', 1)[0]
 
-    def is_supported_entity(x):
-        return entity_domain(x) in ['light', 'switch', 'group', 'scene', 'media_player', 'input_boolean', 'script']
+    def is_supported_entity(x, ha):
+        return entity_domain(x) in ha.supported_domains
 
     def is_skipped_entity(x):
         attr = x['attributes']
@@ -166,7 +166,7 @@ def discover_appliances(ha):
         return o
 
     states = ha.get('states')
-    return [mk_appliance(x) for x in states if is_supported_entity(x) and not
+    return [mk_appliance(x) for x in states if is_supported_entity(x, ha) and not
             is_skipped_entity(x)]
 
 
