@@ -34,6 +34,8 @@ def get_config():
         cfg = json.load(f)
         if 'ha_cert' not in cfg:
             cfg['ha_cert'] = False
+        if 'excluded_domains' not in cfg:
+            cfg['excluded_domains'] = []
         return cfg
 
 
