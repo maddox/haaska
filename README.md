@@ -45,6 +45,7 @@ haaska implements a skill adapter to bridge a [Home Assistant](https://home-assi
    | `ha_url`              | `https://demo.home-assistant.io/api`                                               | **Yes**   | The API endpoint of your Home Assistant instance. This must end in /api (**no trailing slash**). |
    | `ha_passwd`           | `securepassword`                                                                   | **Yes**   | The API password of your Home Assistant instance.                                                |
    | `ha_cert`             | `mycert.crt`                                                                       | No        | The name of your self-signed certificate located in the `config/` directory.                     |
+   | `excluded_domains`    | `["group", "script"]`                                                              | No        | An array of entity types that you want to be ignored when publishing to the Alexa service.       |
 
 6. Send a test event by running `make test`, which will validate that haaska can communicate with your Home Assistant instance. Note that you must have the AWS CLI and [jq](https://stedolan.github.io/jq/) installed.
 
