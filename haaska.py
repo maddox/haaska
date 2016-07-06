@@ -41,7 +41,7 @@ def get_config():
 
 def event_handler(event, context):
     cfg = get_config()
-    ha = HomeAssistant(cfg['ha_url'], cfg['ha_passwd'], cfg['ha_cert'])
+    ha = HomeAssistant(cfg['ha_url'], cfg['ha_passwd'], cfg['excluded_domains'], cfg['ha_cert'])
 
     name = event['header']['name']
     payload = event['payload']
@@ -57,11 +57,15 @@ def handle(event):
 
 
 class HomeAssistant(object):
-    def __init__(self, url, passwd, cert=False):
+    def __init__(self, url, passwd, excluded_domains=[], cert=False):
         self.url = url
         self.headers = {'x-ha-access': passwd,
                         'content-type': 'application/json'}
         self.cert = cert
+        self.supported_domains = ['light', 'switch', 'group', 'scene', 'media_player', 'input_boolean', 'script']
+
+        for domain in excluded_domains:
+            self.supported_domains.remove(domain)
 
     def get(self, relurl):
         r = requests.get(self.url + '/' + relurl, headers=self.headers,
